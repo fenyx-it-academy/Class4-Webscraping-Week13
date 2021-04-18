@@ -13,6 +13,6 @@
 	il
 bilgileri cekilecek 
 ### 3-Cekilen bilgiler bir database kaydedilecek
-4-Databasedeki araclar yila,sehir,modele gore aranilip siralanabilmeli.
+4-Databasedeki araclar yil,sehir,modele gore aranilip siralanabilmeli.
 İlk ekranda, verilerin tamami gorulecek ve yillara gore siralanacak.(Kucukten buyuge)
 Diger aramalarda Fiyata gore siralayacak.

@@ -20,3 +20,5 @@ Diger aramalarda Fiyata gore siralayacak.
 ![alt text](https://github.com/pycoders-nl/Class4-Webscraping-Week14/blob/main/1.jpg)
 ![alt text](https://github.com/pycoders-nl/Class4-Webscraping-Week14/blob/main/2.jpg)
 ![alt text](https://github.com/pycoders-nl/Class4-Webscraping-Week14/blob/main/3.jpg)
+
+## Basarilar...

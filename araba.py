@@ -23,7 +23,17 @@ class ArabaSpider(scrapy.Spider):
                 yield scrapy.Request(url)
 
     def parse_page(self, response):
-        model = response.xpath("/html[1]/body[1]/div[2]/div[6]/div[3]/div[1]/div[1]/p[1]").get()
-        print("######################################################################################")
-        print(model)
+            model=li.css("td:nth-child(2) h3 a ::text").get()
+            
+            yil=li.css("td:nth-child(4) div a ::text").get()
+           
+            kilometre=li.css("td:nth-child(5) div a ::text").get()
+            
+            renk=li.css("td:nth-child(6) div a ::text").get()
+            
+            fiyat=li.css("td:nth-child(7) div span a ::text").get()
+            
+            il=li.css("td:nth-child(9) div div:nth-child(1) a span:nth-child(1) ::text").get()
+                
+            print(model,yil,kilometre,renk,fiyat,il)
 

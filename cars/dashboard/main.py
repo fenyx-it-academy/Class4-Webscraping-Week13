@@ -6,10 +6,14 @@ from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTi
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase,
                            QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PySide2.QtWidgets import *
-
+from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog,
+                             QDialogButtonBox, QFormLayout, QGridLayout, QGroupBox, QHBoxLayout,
+                             QLabel, QLineEdit, QMenu, QMenuBar, QPushButton, QSpinBox, QTextEdit,
+                             QVBoxLayout)
+import psycopg2
+import pandas as pd
 # GUI FILE
 from ui_splash_screen import Ui_SplashScreen
-from ui_main import Ui_MainWindow
 from table_model import TableModel
 
 
@@ -23,56 +27,41 @@ jumper = 10
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
-        self.table = QtWidgets.QTableView()
+        self.resize(700, 700)
 
-        data = [
-            [4, 9, 2],
-            [1, 0, 0],
-            [3, 5, 0],
-            [3, 3, 2],
-            [7, 8, 9],
-        ]
+        self.table = QTableView()
+        (data, ids) = self.get_data()
+        data = pd.DataFrame(
+            data, columns=['Model', 'Year', 'Km', 'Color', 'Price', 'City'], index=ids)
 
         self.model = TableModel(data)
         self.table.setModel(self.model)
 
         self.setCentralWidget(self.table)
 
-    # DEF PROGRESS BAR VALUE
-    ########################################################################
+    def get_data(self, query=None):
+        conn = psycopg2.connect(
+            "dbname=cars user=postgres password=Asude1608.")
 
-    def progressBarValue(self, value, widget, color):
+        cur = conn.cursor()
+        cur.execute("Select * from autos order by model")
+        records = cur.fetchall()
+        cur.close()
+        conn.commit()
+        conn.close()
 
-        # PROGRESSBAR STYLESHEET BASE
-        styleSheet = """
-        QFrame{
-        	border-radius: 110px;
-        	background-color: qconicalgradient(cx:0.5, cy:0.5, angle:90, stop:{STOP_1} rgba(255, 0, 127, 0), stop:{STOP_2} {COLOR});
-        }
-        """
-
-        # GET PROGRESS BAR VALUE, CONVERT TO FLOAT AND INVERT VALUES
-        # stop works of 1.000 to 0.000
-        progress = (100 - value) / 100.0
-
-        # GET NEW VALUES
-        stop_1 = str(progress - 0.001)
-        stop_2 = str(progress)
-
-        # FIX MAX VALUE
-        if value == 100:
-            stop_1 = "1.000"
-            stop_2 = "1.000"
-
-        # SET VALUES TO NEW STYLESHEET
-        newStylesheet = styleSheet.replace("{STOP_1}", stop_1).replace(
-            "{STOP_2}", stop_2).replace("{COLOR}", color)
-
-        # APPLY STYLESHEET WITH NEW VALUES
-        widget.setStyleSheet(newStylesheet)
-
+        data = []
+        ids = []
+        idx = 1
+        for record in records:
+            data.append(list(record)[1:])
+            ids.append(idx)
+            idx += 1
+        return (data, ids)
 
 # ==> SPLASHSCREEN WINDOW
+
+
 class SplashScreen(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -122,7 +111,7 @@ class SplashScreen(QMainWindow):
         if(value > jumper):
             # APPLY NEW PERCENTAGE TEXT
             self.ui.labelPercentage.setText(newHtml)
-            jumper += 10
+            jumper += 1
 
         # SET VALUE TO PROGRESS BAR
         # fix max value error if > than 100

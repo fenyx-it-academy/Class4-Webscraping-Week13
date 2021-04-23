@@ -10,33 +10,43 @@ from PySide2.QtWidgets import *
 # GUI FILE
 from ui_splash_screen import Ui_SplashScreen
 from ui_main import Ui_MainWindow
-from table_model import TableModel
-
-
-# GLOBALS
-counter = 0
-jumper = 10
-
-# ==> YOUR APPLICATION WINDOW
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
-        self.table = QtWidgets.QTableView()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
 
-        data = [
-            [4, 9, 2],
-            [1, 0, 0],
-            [3, 5, 0],
-            [3, 3, 2],
-            [7, 8, 9],
-        ]
+        # ==> SET VALUES TO DEF progressBarValue
+        def setValue(self, slider, labelPercentage, progressBarName, color):
 
-        self.model = TableModel(data)
-        self.table.setModel(self.model)
+            # GET SLIDER VALUE
+            value = slider.value()
 
-        self.setCentralWidget(self.table)
+            # CONVERT VALUE TO INT
+            sliderValue = int(value)
+
+            # HTML TEXT PERCENTAGE
+            htmlText = """<p align="center"><span style=" font-size:50pt;">{VALUE}</span><span style=" font-size:40pt; vertical-align:super;">%</span></p>"""
+            labelPercentage.setText(
+                htmlText.replace("{VALUE}", str(sliderValue)))
+
+            # CALL DEF progressBarValue
+            self.progressBarValue(sliderValue, progressBarName, color)
+
+        # ## ==> APPLY VALUES TO PROGREESBAR
+        # self.ui.sliderCPU.valueChanged.connect(lambda: setValue(
+        #     self, self.ui.sliderCPU, self.ui.labelPercentageCPU, self.ui.circularProgressCPU, "rgba(85, 170, 255, 255)"))
+        # self.ui.sliderGPU.valueChanged.connect(lambda: setValue(
+        #     self, self.ui.sliderGPU, self.ui.labelPercentageGPU, self.ui.circularProgressGPU, "rgba(85, 255, 127, 255)"))
+        # self.ui.sliderRAM.valueChanged.connect(lambda: setValue(
+        #     self, self.ui.sliderRAM, self.ui.labelPercentageRAM, self.ui.circularProgressRAM, "rgba(255, 0, 127, 255)"))
+
+        # ## ==> DEF START VALUES
+        # self.ui.sliderCPU.setValue(25)
+        # self.ui.sliderGPU.setValue(65)
+        # self.ui.sliderRAM.setValue(45)
 
     # DEF PROGRESS BAR VALUE
     ########################################################################

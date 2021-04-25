@@ -2,7 +2,7 @@
 
 ### 1-Auto isminde Scrapy spider olusturulmalidir.
 
- ### 2-"https://www.arabam.com/ikinci-el/otomobil" adresinden BMW,Citroen,Honda araclarinin 
+### 2-"https://www.arabam.com/ikinci-el/otomobil" adresinden BMW,Citroen,Honda araclarinin 
 	Model
 	Yil
 	kilometre 
@@ -18,7 +18,8 @@ Diger aramalarda Fiyata gore siralanmalidir.
 ![alt text](https://github.com/pycoders-nl/Class4-Webscraping-Week14/blob/main/1.jpg)
 ![alt text](https://github.com/pycoders-nl/Class4-Webscraping-Week14/blob/main/2.jpg)
 ![alt text](https://github.com/pycoders-nl/Class4-Webscraping-Week14/blob/main/3.jpg)
-Arabam.com_Scrapy_Project
+
+### Arabam.com_Scrapy_Project
 In this project, a dashboard was created using the data obtained from arabam.com. The project consists of 3 parts.
 
 The dataset has been scraped from the arabam.com. (Scrapy)

@@ -39,6 +39,10 @@ class ArabaSpider(scrapy.Spider):
 
     def parse(self, response):
         self.connection = connect(param_dic)
+        cursor = self.connection.cursor()
+        cursor.execute("DELETE from cars")
+        self.connection.commit()
+        cursor.close() 
         models = []
         models.append(response.xpath('//*[@id="js-hook-for-listen-scroll-cta"]/div[1]/ul[2]/li/ul/li[6]/a/@href').extract())
         models.append(response.xpath('//*[@id="js-hook-for-listen-scroll-cta"]/div[1]/ul[2]/li/ul/li[11]/a/@href').extract())
@@ -49,6 +53,10 @@ class ArabaSpider(scrapy.Spider):
                 url=response.urljoin(urls)
                 yield scrapy.Request(url, callback=self.sorgu)
     
+
+
+
+
     def sorgu(self,response):
         liste=response.css('tbody tr')
     
@@ -67,6 +75,18 @@ class ArabaSpider(scrapy.Spider):
             il=li.css("td:nth-child(9) div div:nth-child(1) a span:nth-child(1) ::text").get()
              
             self.save_to_db(model,yil,kilometre,renk,fiyat,il)
+            
+            next_page=response.xpath('//*[@id="pagingNext"]/@href')
+            # print(next_page)
+
+            if next_page:
+                print("-----------------")
+                # print(response.url)
+
+                url=response.urljoin(next_page.get())
+                # print(url)
+                print("--------------")
+                yield scrapy.Request(url, callback=self.sorgu)
 
 
     def save_to_db(self, model, yil, kilometre, renk, fiyat, il):

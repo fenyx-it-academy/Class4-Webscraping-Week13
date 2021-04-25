@@ -23,5 +23,7 @@ Diger aramalarda Fiyata gore siralanmalidir.
 In this project, a dashboard was created using the data obtained from arabam.com. The project consists of 3 parts.
 
 The dataset has been scraped from the arabam.com. (Scrapy)
+
 The cleaned dataset has been uploaded to the database. (PostgreSQL)
+
 The data extracted from the database has been visualized with an interactive dashboard. (Dash, Psycopg2, HTML)

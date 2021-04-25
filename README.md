@@ -3,13 +3,7 @@
 ### 1-Auto isminde Scrapy spider olusturulmalidir.
 
 ### 2-"https://www.arabam.com/ikinci-el/otomobil" adresinden BMW,Citroen,Honda araclarinin 
-	Model
-	Yil
-	kilometre 
-	renk
-	fiyat
-	il
-bilgileri cekilmelidir,
+	Model, Yil, kilometre, renk, fiyat, il bilgileri cekilmelidir.
 ### 3-Cekilen bilgiler bir database'e kaydedilmelidir.
 ### 4-Databasedeki araclar yil,sehir,modele gore aranilip siralanabilmelidir
 İlk ekranda, verilerin tamami goruntulenmeli ve yillara gore siralanmalidir(Kucukten buyuge).
